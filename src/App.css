@@ -4762,3 +4762,406 @@
     padding: 22px;
   }
 }
+
+@media (max-width: 760px) {
+  html,
+  body,
+  #root {
+    width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
+  .app-shell.portal-layout {
+    --topbar-height: 74px;
+    --modulebar-height: 54px;
+  }
+
+  .portal-layout .layout-header {
+    min-height: var(--topbar-height);
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "brand title profile"
+      "language language language";
+    align-items: center;
+    gap: 6px 8px;
+    padding: 6px 8px;
+  }
+
+  .portal-layout .layout-header-brand {
+    grid-area: brand;
+    width: auto;
+    min-width: 0;
+    max-width: 44px;
+    padding: 0;
+    border: 0;
+  }
+
+  .portal-layout .layout-header-title {
+    grid-area: title;
+    min-width: 0;
+    gap: 7px;
+  }
+
+  .portal-layout .layout-header-title strong {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 15px;
+  }
+
+  .portal-layout .layout-header-title span,
+  .portal-layout .layout-header-spacer,
+  .portal-layout .theme-switch {
+    display: none;
+  }
+
+  .portal-layout .language-switch {
+    grid-area: language;
+    justify-self: stretch;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    height: 32px;
+  }
+
+  .portal-layout .language-switch button {
+    min-width: 0;
+    height: 32px;
+  }
+
+  .portal-layout .layout-profile {
+    grid-area: profile;
+    min-width: 0;
+  }
+
+  .portal-layout .profile-button {
+    min-width: 44px;
+    padding: 4px 7px;
+  }
+
+  .portal-layout .profile-button span:not(.avatar),
+  .portal-layout .profile-button svg:last-child {
+    display: none;
+  }
+
+  .portal-layout .profile-menu {
+    position: fixed;
+    top: calc(var(--topbar-height) - 2px);
+    right: 8px;
+    left: 8px;
+    width: auto;
+  }
+
+  .app-shell[dir='rtl'] .portal-layout .profile-menu,
+  .app-shell[dir='rtl'] .profile-menu {
+    right: 8px;
+    left: 8px;
+  }
+
+  .portal-layout .layout-sidebar {
+    height: var(--modulebar-height);
+    overflow: hidden;
+  }
+
+  .portal-layout .layout-nav {
+    grid-template-rows: 40px;
+    padding: 7px 8px;
+    overflow: hidden;
+  }
+
+  .layout-nav-groups {
+    gap: 6px;
+    padding-bottom: 4px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .portal-layout .layout-nav-group-header {
+    min-height: 36px;
+    padding: 0 12px;
+    scroll-snap-align: start;
+    font-size: 12px;
+  }
+
+  .portal-layout .layout-main {
+    padding-top: calc(var(--topbar-height) + var(--modulebar-height));
+  }
+
+  .portal-layout .layout-content {
+    min-width: 0;
+    padding: 6px;
+  }
+
+  .ops-page,
+  .identity-access-page,
+  .master-shell,
+  .demo-dashboard-board {
+    min-width: 0;
+    gap: 8px;
+  }
+
+  .ops-heading {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: flex-start;
+    padding: 8px;
+  }
+
+  .ops-heading-actions {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .ops-heading h1,
+  .master-page-heading h1 {
+    font-size: 17px;
+    line-height: 1.2;
+  }
+
+  .ops-heading p,
+  .ops-panel-heading p,
+  .master-page-heading p {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    font-size: 12px;
+  }
+
+  .ops-panel,
+  .master-card,
+  .role-profile-modal-panel {
+    width: 100%;
+    min-width: 0;
+    border-radius: 7px;
+  }
+
+  .ops-panel-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .ops-panel-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-kpi-grid,
+  .dashboard-exposure-list,
+  .demo-area-list,
+  .role-profile-grid,
+  .role-permission-group-fields,
+  .master-form-grid,
+  .master-form-grid.one,
+  .master-form-grid.three,
+  .master-form-grid.four,
+  .ops-form-grid,
+  .ops-form-grid.two,
+  .ops-form-grid.four,
+  .ops-form-grid.five,
+  .company-form {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .dashboard-kpi,
+  .dashboard-exposure-row,
+  .demo-area-card {
+    min-width: 0;
+  }
+
+  .dashboard-exposure-row,
+  .demo-area-card {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+  }
+
+  .master-form,
+  .master-form-section {
+    min-width: 0;
+  }
+
+  .master-field,
+  .ops-field,
+  .master-filter,
+  .form-field {
+    min-width: 0;
+  }
+
+  .master-field input,
+  .master-field select,
+  .master-field textarea,
+  .ops-field input,
+  .ops-field select,
+  .ops-field textarea,
+  .auth-form input,
+  .form-field input,
+  .form-field textarea {
+    width: 100%;
+    min-width: 0;
+    font-size: 16px;
+  }
+
+  .master-field textarea,
+  .ops-field textarea {
+    min-height: 78px;
+  }
+
+  .search-select__control,
+  .search-select__value-container,
+  .search-select__input-container,
+  .search-select__single-value {
+    min-width: 0;
+  }
+
+  .search-select__menu {
+    max-width: calc(100vw - 20px);
+  }
+
+  .master-toolbar,
+  .master-form-actions,
+  .master-pagination,
+  .ops-actions-row,
+  .role-profile-actions,
+  .role-permission-quick-actions {
+    width: 100%;
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .master-button,
+  .ops-button,
+  .auth-submit,
+  .role-permission-quick-actions button {
+    width: 100%;
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .master-search {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .master-search input {
+    min-width: 0;
+  }
+
+  .ops-table-wrap,
+  .master-table-wrap {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ops-table,
+  .master-table {
+    min-width: 680px;
+  }
+
+  .ops-table th,
+  .ops-table td,
+  .master-table th,
+  .master-table td {
+    white-space: nowrap;
+  }
+
+  .role-profile-modal {
+    align-items: stretch;
+    padding: 8px;
+  }
+
+  .role-profile-modal-panel {
+    max-height: calc(100vh - 16px);
+    overflow: hidden;
+  }
+
+  .role-profile-modal-panel header,
+  .role-profile-modal-panel footer {
+    flex-shrink: 0;
+  }
+
+  .role-profile-modal-body {
+    min-width: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-right: 2px;
+  }
+
+  .role-permission-levels {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .role-permission-group header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .auth-main {
+    min-height: 100dvh;
+    padding: 12px;
+  }
+
+  .auth-panel {
+    width: 100%;
+    max-width: 420px;
+    padding: 18px;
+  }
+
+  .auth-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .auth-signal,
+  .auth-footnote {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .app-shell.portal-layout {
+    --topbar-height: 72px;
+    --modulebar-height: 52px;
+  }
+
+  .portal-layout .layout-header {
+    gap: 5px 6px;
+    padding: 5px 6px;
+  }
+
+  .section-icon,
+  .layout-brand-mark,
+  .avatar {
+    width: 34px;
+    height: 34px;
+  }
+
+  .portal-layout .layout-nav-group-header {
+    min-height: 34px;
+    padding: 0 10px;
+  }
+
+  .portal-layout .layout-content {
+    padding: 5px;
+  }
+
+  .ops-panel,
+  .master-card,
+  .ops-heading {
+    padding: 7px;
+  }
+
+  .ops-table,
+  .master-table {
+    min-width: 620px;
+  }
+}
