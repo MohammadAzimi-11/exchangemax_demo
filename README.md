@@ -9,7 +9,7 @@ This repository is prepared for a public live demo on GitHub, Vercel, Netlify, o
 - React + Vite frontend
 - English as the default language
 - Fake demo users, roles, customers, reports, and dashboard data
-- Static mock API enabled by `VITE_DEMO_MODE=true`
+- Static mock API enabled by default
 - Clean navigation focused on the first two usable sections:
   - Dashboard
   - Setup
@@ -67,11 +67,7 @@ Build command: npm run build
 Output directory: dist
 ```
 
-Demo mode is already enabled in:
-
-```text
-.env.production
-```
+Demo mode is enabled by default for static deployments, so a public demo does not need a committed `.env.production` file.
 
 ## Environment Variables
 
@@ -79,7 +75,7 @@ Demo mode is already enabled in:
 VITE_DEMO_MODE=true
 ```
 
-When `VITE_DEMO_MODE=true`, the app uses `src/utils/demoApi.js` instead of a real backend.
+When `VITE_DEMO_MODE` is missing or set to `true`, the app uses `src/utils/demoApi.js` instead of a real backend.
 
 For a real backend deployment later, set:
 

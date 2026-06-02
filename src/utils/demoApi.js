@@ -733,5 +733,5 @@ export function demoApiAdapter(config) {
 }
 
 export function isDemoApiEnabled() {
-  return import.meta.env.VITE_DEMO_MODE === 'true'
+  return import.meta.env.VITE_DEMO_MODE !== 'false'
 }

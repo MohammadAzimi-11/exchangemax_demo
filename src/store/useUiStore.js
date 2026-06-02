@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { isDemoApiEnabled } from '../utils/demoApi.js'
 
 const defaultCompanyProfile = {
   name: 'Exchange Desk',
@@ -32,7 +33,7 @@ function readInitialLanguage() {
   const languageKey = 'projectonline-language'
   const demoDefaultKey = 'projectonline-demo-language-defaulted'
 
-  if (import.meta.env.VITE_DEMO_MODE === 'true' && localStorage.getItem(demoDefaultKey) !== 'true') {
+  if (isDemoApiEnabled() && localStorage.getItem(demoDefaultKey) !== 'true') {
     localStorage.setItem(languageKey, 'en')
     localStorage.setItem(demoDefaultKey, 'true')
     return 'en'
