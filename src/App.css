@@ -4691,6 +4691,34 @@
   padding-top: 6px;
 }
 
+.transaction-demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 10px;
+}
+
+.transaction-demo-button {
+  min-height: 54px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--surface-2);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.transaction-demo-button:hover {
+  border-color: color-mix(in srgb, var(--brand) 34%, var(--border));
+  background: color-mix(in srgb, var(--brand) 10%, var(--surface));
+  color: var(--brand);
+}
+
 @media (max-width: 920px) {
   .portal-layout .layout-header {
     height: auto;
@@ -4773,12 +4801,14 @@
   }
 
   .app-shell.portal-layout {
-    --topbar-height: 74px;
-    --modulebar-height: 54px;
+    --topbar-height: 106px;
+    --modulebar-height: 56px;
   }
 
   .portal-layout .layout-header {
+    height: var(--topbar-height);
     min-height: var(--topbar-height);
+    box-sizing: border-box;
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     grid-template-areas:
@@ -4825,12 +4855,15 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 6px;
-    height: 32px;
+    width: 100%;
+    max-width: 100%;
+    height: 34px;
   }
 
   .portal-layout .language-switch button {
+    width: 100%;
     min-width: 0;
-    height: 32px;
+    height: 34px;
   }
 
   .portal-layout .layout-profile {
@@ -4863,6 +4896,7 @@
   }
 
   .portal-layout .layout-sidebar {
+    inset: var(--topbar-height) 0 auto 0;
     height: var(--modulebar-height);
     overflow: hidden;
   }
@@ -4874,6 +4908,7 @@
   }
 
   .layout-nav-groups {
+    width: 100%;
     gap: 6px;
     padding-bottom: 4px;
     scroll-snap-type: x proximity;
@@ -5129,11 +5164,12 @@
 
 @media (max-width: 420px) {
   .app-shell.portal-layout {
-    --topbar-height: 72px;
-    --modulebar-height: 52px;
+    --topbar-height: 108px;
+    --modulebar-height: 56px;
   }
 
   .portal-layout .layout-header {
+    height: var(--topbar-height);
     gap: 5px 6px;
     padding: 5px 6px;
   }

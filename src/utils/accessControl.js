@@ -2,15 +2,19 @@ const READ_LEVELS = new Set(['VIEW', 'CREATE', 'EDIT', 'DELETE', 'FULL'])
 
 const modulePermissionAreas = {
   dashboard: ['dashboard'],
+  accounts: ['accounts', 'accountCreate', 'accountClose'],
   audit: ['auditLog'],
   backup: ['backup'],
+  'cash-funds': ['cashFunds', 'cashFundManage'],
   customers: ['customers', 'customerCreate', 'customerKyc'],
   'exchange-rates': ['exchangeRates'],
+  hawala: ['hawala', 'hawalaCreate', 'hawalaPay', 'hawalaAgents'],
   identity: ['userManagement', 'roleManagement'],
   ledger: ['journalLedger', 'ledgerExport'],
   notifications: ['notifications', 'userManagement', 'systemSettings'],
   reports: ['reports', 'reportExport'],
   settings: ['companySettings', 'systemSettings'],
+  transactions: ['transactionsDemo'],
 }
 
 export function permissionMapForUser(user) {

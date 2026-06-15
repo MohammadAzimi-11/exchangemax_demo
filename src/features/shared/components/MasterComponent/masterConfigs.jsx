@@ -1393,7 +1393,6 @@ export const masterConfigByModuleKey = {
   customers: customersConfig,
   accounts: accountsConfig,
   'cash-funds': cashFundsConfig,
-  transactions: transactionsConfig,
   'exchange-rates': exchangeRatesConfig,
   hawala: hawalaTransferConfig,
 }

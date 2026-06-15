@@ -30,28 +30,6 @@ function groupItem(groupKey, moduleKeys) {
   }
 }
 
-function groupOnlyItem(groupKey, path, accessModuleKey) {
-  const group = navigationGroups.find((item) => item.key === groupKey)
-
-  if (!group) {
-    throw new Error(`Unknown navigation group: ${groupKey}`)
-  }
-
-  return {
-    group: group.label,
-    groupIcon: group.icon,
-    groupKey: group.key,
-    items: [
-      {
-        icon: group.icon,
-        label: group.label,
-        moduleKey: accessModuleKey,
-        path,
-      },
-    ],
-  }
-}
-
 export const navConfig = [
   {
     group: null,
@@ -60,8 +38,9 @@ export const navConfig = [
     items: [moduleItem('dashboard')],
   },
   groupItem('setup', ['identity', 'customers']),
-  groupOnlyItem('accounting', '/accounting', 'reports'),
-  groupOnlyItem('administration', '/administration', 'settings'),
+  groupItem('money', ['accounts', 'cash-funds', 'transactions', 'exchange-rates', 'hawala']),
+  groupItem('accounting', ['ledger', 'reports']),
+  groupItem('administration', ['notifications', 'audit', 'backup', 'settings']),
 ]
 
 export const flatNavItems = navConfig.flatMap((section) => section.items)

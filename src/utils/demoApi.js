@@ -58,8 +58,8 @@ function notFound(config) {
   })
 }
 
-const companyProfile = {
-  name: ' Exchange Demo',
+let companyProfile = {
+  name: 'Exchange Demo',
   companyName: 'Exchange Demo',
   legalName: 'Exchange Demo Ltd.',
   registrationNumber: 'DEMO-EX-2026',
@@ -74,14 +74,139 @@ const companyProfile = {
   receiptFooter: 'Demo receipt. No real money movement.',
 }
 
+const systemConfig = {
+  display: {
+    themeColor: '#173049',
+    fontColor: '#141c22',
+    fontFamily: 'Inter',
+    fontSize: 15,
+    decimalPlaces: 2,
+    thousandsSeparator: true,
+    persianDigits: false,
+    defaultLanguage: 'fa',
+  },
+  accountingPolicy: {
+    allowNegativeChequeClearance: false,
+    allowOverCreditLimit: false,
+    allowOverDebitLimit: false,
+    payWhenInsufficientBalance: false,
+  },
+  hawala: {
+    trackingPrefix: 'HW',
+    trackingPadding: 4,
+    collectionDeadlineDays: 7,
+  },
+  security: {
+    loginRequired: false,
+    passwordMinLength: 8,
+    passwordRequireUppercase: true,
+    passwordRequireNumber: true,
+    passwordExpiryDays: 0,
+    failedLoginLockThreshold: 5,
+    failedLoginLockMinutes: 15,
+    sessionTimeoutMinutes: {
+      ADMIN: 60,
+      MANAGER: 60,
+      OPERATOR: 30,
+      AUDITOR: 45,
+      CUSTOM: 30,
+    },
+    twoFactorRequired: {
+      ADMIN: false,
+      MANAGER: false,
+      OPERATOR: false,
+      AUDITOR: false,
+      CUSTOM: false,
+    },
+  },
+  printer: {
+    connectionType: 'USB',
+    usbName: 'Demo Thermal 80mm',
+    networkHost: '',
+    networkPort: 9100,
+    footerText: 'Demo receipt. No real money movement.',
+  },
+  notifications: {
+    largeTransactionAmount: 10000,
+    kycExpiryDays: 30,
+    hawalaOverdueDays: 2,
+    backupNoSuccessHours: 25,
+  },
+  backup: {
+    schedule: 'DAILY',
+    storageType: 'local',
+    retentionCount: 30,
+  },
+}
+
+const transactionConfig = {
+  accounts: {
+    numberPrefix: 'ACC',
+    numberPadding: 5,
+  },
+  transactions: {
+    referencePadding: 4,
+    referencePrefix: {
+      DEPOSIT: 'DP',
+      WITHDRAWAL: 'WD',
+      TRANSFER: 'TR',
+      EXCHANGE: 'FX',
+      REVERSAL: 'RV',
+      ADJUSTMENT: 'ADJ',
+      VAULT_IN: 'VIN',
+      VAULT_OUT: 'VOUT',
+      HAWALA_SEND: 'HS',
+      HAWALA_PAY: 'HP',
+      HAWALA_RETURN: 'HR',
+      HAWALA_SETTLE: 'HST',
+    },
+  },
+  printing: {
+    autoQueue: {
+      DEPOSIT: true,
+      WITHDRAWAL: true,
+      TRANSFER: true,
+      EXCHANGE: true,
+      REVERSAL: true,
+      HAWALA_SEND: true,
+      HAWALA_PAY: true,
+      HAWALA_RETURN: true,
+      DAILY_CASH_SUMMARY: false,
+      ACCOUNT_STATEMENT: false,
+    },
+    defaultCopies: {
+      DEPOSIT: 1,
+      WITHDRAWAL: 1,
+      TRANSFER: 1,
+      EXCHANGE: 1,
+      REVERSAL: 1,
+      HAWALA_SEND: 2,
+      HAWALA_PAY: 2,
+      HAWALA_RETURN: 1,
+      DAILY_CASH_SUMMARY: 1,
+      ACCOUNT_STATEMENT: 1,
+    },
+  },
+}
+
 const demoPermissions = [
   'dashboard',
   'auditLog',
   'backup',
+  'transactionsDemo',
+  'accounts',
+  'accountCreate',
+  'accountClose',
+  'cashFunds',
+  'cashFundManage',
   'customers',
   'customerCreate',
   'customerKyc',
   'exchangeRates',
+  'hawala',
+  'hawalaCreate',
+  'hawalaPay',
+  'hawalaAgents',
   'journalLedger',
   'ledgerExport',
   'notifications',
@@ -222,15 +347,22 @@ const accounts = [
   {
     id: 'acc-001',
     accountNo: 'ACC-10001',
+    accountNumber: 'ACC-10001',
     accountName: 'Omar Haddad USD',
     customerId: 'cust-001',
     customer: customers[0],
     currencyId: 'cur-usd',
+    currency: currencies[1],
     currencyCode: 'USD',
     categoryId: 'cat-current',
     category: accountCategories[0],
+    accountCategoryId: 'cat-current',
+    accountCategory: accountCategories[0],
+    accountType: 'CASH',
+    balance: 48500,
     currentBalance: 48500,
     availableBalance: 48200,
+    onHoldAmount: 300,
     status: 'ACTIVE',
     isActive: true,
     createdAt: iso(-20),
@@ -238,15 +370,22 @@ const accounts = [
   {
     id: 'acc-002',
     accountNo: 'ACC-10002',
+    accountNumber: 'ACC-10002',
     accountName: 'Nawbahar AFN',
     customerId: 'cust-002',
     customer: customers[1],
     currencyId: 'cur-afn',
+    currency: currencies[0],
     currencyCode: 'AFN',
     categoryId: 'cat-current',
     category: accountCategories[0],
+    accountCategoryId: 'cat-current',
+    accountCategory: accountCategories[0],
+    accountType: 'BUSINESS',
+    balance: 3420000,
     currentBalance: 3420000,
     availableBalance: 3405000,
+    onHoldAmount: 15000,
     status: 'ACTIVE',
     isActive: true,
     createdAt: iso(-16),
@@ -254,15 +393,22 @@ const accounts = [
   {
     id: 'acc-003',
     accountNo: 'ACC-10003',
+    accountNumber: 'ACC-10003',
     accountName: 'Lina Rahman AED',
     customerId: 'cust-003',
     customer: customers[2],
     currencyId: 'cur-aed',
+    currency: currencies[2],
     currencyCode: 'AED',
     categoryId: 'cat-vip',
     category: accountCategories[1],
+    accountCategoryId: 'cat-vip',
+    accountCategory: accountCategories[1],
+    accountType: 'SAVINGS',
+    balance: 128000,
     currentBalance: 128000,
     availableBalance: 128000,
+    onHoldAmount: 0,
     status: 'ACTIVE',
     isActive: true,
     createdAt: iso(-10),
@@ -365,9 +511,51 @@ const exchangeRates = [
 ]
 
 const tradingCities = [
-  { id: 'city-kabul', title: 'Kabul Main Branch', cityName: 'Kabul', branchName: 'Main Branch', country: 'Afghanistan', officePhone: '+93 700 123 456', officeAddress: 'Share-e-Naw, Kabul', isActive: true },
-  { id: 'city-dubai', title: 'Dubai Partner Desk', cityName: 'Dubai', branchName: 'Deira Desk', country: 'United Arab Emirates', officePhone: '+971 4 000 0000', officeAddress: 'Deira, Dubai', isActive: true },
-  { id: 'city-herat', title: 'Herat Branch', cityName: 'Herat', branchName: 'Central Branch', country: 'Afghanistan', officePhone: '+93 799 111 222', officeAddress: 'Central Herat', isActive: true },
+  {
+    id: 'city-kabul',
+    title: 'Kabul Main Branch',
+    cityName: 'Kabul',
+    branchName: 'Main Branch',
+    country: 'Afghanistan',
+    managerName: 'Demo Administrator',
+    phone: '+93 700 123 456',
+    officePhone: '+93 700 123 456',
+    officeAddress: 'Share-e-Naw, Kabul',
+    notes: 'Primary demo branch.',
+    customerId: 'cust-001',
+    customer: customers[0],
+    isActive: true,
+  },
+  {
+    id: 'city-dubai',
+    title: 'Dubai Partner Desk',
+    cityName: 'Dubai',
+    branchName: 'Deira Desk',
+    country: 'United Arab Emirates',
+    managerName: 'Dubai Partner',
+    phone: '+971 4 000 0000',
+    officePhone: '+971 4 000 0000',
+    officeAddress: 'Deira, Dubai',
+    notes: 'Partner collection desk.',
+    customerId: 'cust-002',
+    customer: customers[1],
+    isActive: true,
+  },
+  {
+    id: 'city-herat',
+    title: 'Herat Branch',
+    cityName: 'Herat',
+    branchName: 'Central Branch',
+    country: 'Afghanistan',
+    managerName: 'Herat Manager',
+    phone: '+93 799 111 222',
+    officePhone: '+93 799 111 222',
+    officeAddress: 'Central Herat',
+    notes: 'Domestic hawala branch.',
+    customerId: 'cust-003',
+    customer: customers[2],
+    isActive: true,
+  },
 ]
 
 const agents = [
@@ -473,11 +661,30 @@ const store = {
   '/api/reports/history': reportHistory,
   '/api/settings/currencies': currencies,
   '/api/settings/fee-structures': [
-    { id: 'fee-001', transactionType: 'EXCHANGE', currencyCode: 'USD', feeType: 'fixed', feeValue: 5, minFee: 2, maxFee: 50, isActive: true },
+    { id: 'fee-001', transactionType: 'EXCHANGE', currencyCode: 'USD', feeType: 'flat', feeValue: 5, minFee: 2, maxFee: 50, isActive: true },
     { id: 'fee-002', transactionType: 'HAWALA_SEND', currencyCode: 'AFN', feeType: 'percent', feeValue: 0.2, minFee: 50, maxFee: 500, isActive: true },
   ],
   '/api/settings/print-jobs': [
-    { id: 'print-001', type: 'HAWALA', status: 'printed', copies: 1, referenceNo: 'HW-2026-0001', createdAt: iso(0, -3) },
+    {
+      id: 'print-001',
+      documentType: 'HAWALA_SEND',
+      status: 'printed',
+      copies: 2,
+      printerName: 'Demo Thermal 80mm',
+      transaction: null,
+      hawala: hawalas[0],
+      createdAt: iso(0, -3),
+    },
+    {
+      id: 'print-002',
+      documentType: 'EXCHANGE',
+      status: 'queued',
+      copies: 1,
+      printerName: 'Demo Thermal 80mm',
+      transaction: transactions[1],
+      hawala: null,
+      createdAt: iso(0, -4),
+    },
   ],
   '/api/settings/trading-cities': tradingCities,
   '/api/settings/transaction-limits': [
@@ -510,6 +717,28 @@ function deleteItem(path, id) {
   if (index >= 0) {
     items.splice(index, 1)
   }
+}
+
+function upsertMany(path, payload, keyFields) {
+  const items = store[path] || []
+  const rows = Array.isArray(payload) ? payload : [payload]
+
+  rows.forEach((row) => {
+    const index = items.findIndex((item) => keyFields.every((field) => item[field] === row[field]))
+    const next = {
+      ...row,
+      id: row.id || (index >= 0 ? items[index].id : `${path.split('/').filter(Boolean).pop()}-${Date.now()}-${items.length}`),
+      updatedAt: new Date().toISOString(),
+    }
+
+    if (index >= 0) {
+      items[index] = { ...items[index], ...next }
+    } else {
+      items.unshift({ ...next, createdAt: new Date().toISOString() })
+    }
+  })
+
+  return items
 }
 
 function dashboardPayload() {
@@ -562,8 +791,10 @@ function dashboardPayload() {
 function journalPayload() {
   const items = transactions.map((transaction) => ({
     ...transaction,
-    debitLabel: transaction.debitAccountId || 'Cash',
-    creditLabel: transaction.creditAccountId || 'Customer account',
+    completedAt: transaction.createdAt,
+    debitAccount: accounts.find((account) => account.id === transaction.debitAccountId) || null,
+    creditAccount: accounts.find((account) => account.id === transaction.creditAccountId) || null,
+    operator: users[1],
     entryType: transaction.type,
   }))
 
@@ -581,21 +812,30 @@ function journalPayload() {
 
 function statementPayload(id) {
   const account = accounts.find((item) => item.id === id) || cashFunds.find((item) => item.id === id)
+  const rows = transactions.map((transaction, index) => ({
+    id: transaction.id,
+    entryNumber: `JE-${String(index + 1).padStart(4, '0')}`,
+    entryDate: transaction.createdAt,
+    transaction,
+    transactionReference: transaction.referenceNo,
+    description: transaction.narration,
+    narration: transaction.narration,
+    direction: transaction.type === 'WITHDRAWAL' ? 'DEBIT' : 'CREDIT',
+    debit: transaction.type === 'WITHDRAWAL' ? transaction.amount : 0,
+    credit: transaction.type !== 'WITHDRAWAL' ? transaction.amount : 0,
+    amount: transaction.amount,
+    runningBalance: account?.availableBalance || account?.currentBalance || 0,
+    balance: account?.availableBalance || account?.currentBalance || 0,
+    currencyCode: transaction.currencyCode,
+  }))
 
   return {
     account,
-    openingBalance: 42000,
-    closingBalance: account?.availableBalance || account?.currentBalance || 0,
-    rows: transactions.map((transaction) => ({
-      id: transaction.id,
-      referenceNo: transaction.referenceNo,
-      date: transaction.createdAt,
-      description: transaction.narration,
-      debit: transaction.type === 'WITHDRAWAL' ? transaction.amount : 0,
-      credit: transaction.type !== 'WITHDRAWAL' ? transaction.amount : 0,
-      balance: account?.availableBalance || account?.currentBalance || 0,
-      currencyCode: transaction.currencyCode,
-    })),
+    statement: {
+      openingBalance: 42000,
+      closingBalance: account?.availableBalance || account?.currentBalance || 0,
+      items: rows,
+    },
   }
 }
 
@@ -628,15 +868,10 @@ function routeGet(path, params, config) {
     }, config)
   }
   if (path === '/api/settings/system-config') {
-    return ok({
-      config: {
-        display: { themeColor: '#173049', fontColor: '#141c22', fontFamily: 'Inter', fontSize: 15 },
-        printer: { defaultCopies: 1, autoPrint: false },
-      },
-    }, config)
+    return ok({ config: systemConfig }, config)
   }
   if (path === '/api/settings/transaction-config') {
-    return ok({ config: { accountPrefix: 'ACC', accountPadding: 5, referencePadding: 4, referencePrefix: { DEPOSIT: 'DP', WITHDRAWAL: 'WD', TRANSFER: 'TR', EXCHANGE: 'FX' } } }, config)
+    return ok({ config: transactionConfig }, config)
   }
   if (path === '/api/backup/config') {
     return ok({ config: { schedule: 'DAILY', retentionCount: 30, storageType: 'local', storageConfig: { directory: 'demo/backups' }, notifyEmails: ['admin@kabulexchange.example'], notifyOnSuccess: true, notifyOnFailure: true, isEnabled: true } }, config)
@@ -675,7 +910,49 @@ function routeWrite(method, path, payload, config) {
   if (path === '/api/identity/login') return ok({ token: DEMO_TOKEN, user: currentUser }, config)
   if (path === '/api/identity/logout') return ok({ message: 'Signed out of demo mode.' }, config)
   if (path === '/api/uploads') return ok({ relativePath: 'demo/uploads/sample-document.png', fileName: 'sample-document.png' }, config, 201)
-  if (path === '/api/company') return ok({ profile: { ...companyProfile, ...payload }, message: 'Demo company profile saved.' }, config)
+  if (path === '/api/company') {
+    companyProfile = { ...companyProfile, ...payload, updatedAt: new Date().toISOString() }
+    return ok({ profile: companyProfile, message: 'Demo company profile saved.' }, config)
+  }
+  if (path === '/api/settings/system-config' && ['put', 'patch'].includes(method)) {
+    Object.assign(systemConfig.display, payload.display || {})
+    Object.assign(systemConfig.accountingPolicy, payload.accountingPolicy || {})
+    Object.assign(systemConfig.hawala, payload.hawala || {})
+    Object.assign(systemConfig.security, payload.security || {})
+    Object.assign(systemConfig.printer, payload.printer || {})
+    Object.assign(systemConfig.notifications, payload.notifications || {})
+    Object.assign(systemConfig.backup, payload.backup || {})
+    return ok({ config: systemConfig, message: 'Demo system configuration saved.' }, config)
+  }
+  if (path === '/api/settings/transaction-config' && ['put', 'patch'].includes(method)) {
+    Object.assign(transactionConfig.accounts, payload.accounts || {})
+    Object.assign(transactionConfig.transactions, payload.transactions || {})
+    Object.assign(transactionConfig.printing, payload.printing || {})
+    return ok({ config: transactionConfig, message: 'Demo transaction configuration saved.' }, config)
+  }
+  if (path === '/api/settings/currencies/seed-defaults' && method === 'post') {
+    const defaults = [
+      { code: 'AFN', name: 'Afghan Afghani', symbol: 'AFN', decimalPlaces: 2 },
+      { code: 'USD', name: 'US Dollar', symbol: '$', decimalPlaces: 2 },
+      { code: 'EUR', name: 'Euro', symbol: 'EUR', decimalPlaces: 2 },
+      { code: 'AED', name: 'UAE Dirham', symbol: 'AED', decimalPlaces: 2 },
+      { code: 'PKR', name: 'Pakistani Rupee', symbol: 'PKR', decimalPlaces: 2 },
+    ]
+    let count = 0
+    defaults.forEach((currency) => {
+      if (!currencies.some((item) => item.code === currency.code)) {
+        currencies.push({ id: `cur-${currency.code.toLowerCase()}`, ...currency, isActive: true, createdAt: new Date().toISOString() })
+        count += 1
+      }
+    })
+    return ok({ count, items: currencies, message: 'Demo default currencies saved.' }, config, 201)
+  }
+  if (path === '/api/settings/fee-structures' && ['put', 'patch'].includes(method)) {
+    return ok({ items: upsertMany(path, payload, ['currencyCode', 'transactionType']), message: 'Demo fee structure saved.' }, config)
+  }
+  if (path === '/api/settings/transaction-limits' && ['put', 'patch'].includes(method)) {
+    return ok({ items: upsertMany(path, payload, ['customerType', 'transactionType', 'currencyCode']), message: 'Demo transaction limit saved.' }, config)
+  }
   if (path.includes('/export')) {
     const report = { id: `rep-${Date.now()}`, name: 'Demo Export', reportType: path.split('/')[3], format: payload?.format || 'PDF', status: 'READY', createdAt: new Date().toISOString() }
     reportHistory.unshift(report)
@@ -695,6 +972,16 @@ function routeWrite(method, path, payload, config) {
   }
   if (path.includes('/journal') || path.includes('/manual-entries') || path.includes('/statement/print')) {
     return ok({ item: payload, message: 'Demo accounting action completed.' }, config, method === 'post' ? 201 : 200)
+  }
+  if (/^\/api\/settings\/print-jobs\/[^/]+\/reprint$/.test(path)) {
+    const id = path.split('/')[4]
+    const item = updateItem('/api/settings/print-jobs', id, {
+      status: 'queued',
+      copies: payload?.copies || 1,
+      printedById: payload?.printedById,
+      errorMsg: null,
+    })
+    return item ? ok({ item, message: 'Demo reprint queued.' }, config) : notFound(config)
   }
   if (path.includes('/reprint')) return ok({ message: 'Demo print job queued.' }, config)
 

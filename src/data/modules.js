@@ -1,21 +1,27 @@
 import {
   Activity,
   Archive,
+  BadgeDollarSign,
+  Banknote,
   Bell,
   BookOpen,
   Building2,
   Calculator,
+  CircleDollarSign,
   ClipboardList,
   Coins,
   ContactRound,
   DatabaseBackup,
   FileBarChart,
   Gauge,
+  Landmark,
   LockKeyhole,
+  Repeat2,
   Scale,
   Settings,
   ShieldCheck,
   UsersRound,
+  WalletCards,
 } from 'lucide-react'
 
 export const languages = [
@@ -76,6 +82,81 @@ export const modules = [
     },
   },
   {
+    key: 'accounts',
+    title: { en: 'Accounts', fa: 'حساب‌ها' },
+    path: '/accounts',
+    route: '/api/accounts',
+    groupKey: 'money',
+    icon: WalletCards,
+    status: { en: 'Ready', fa: 'آماده' },
+    accent: 'blue',
+    metric: { en: 'Balances', fa: 'بیلانس' },
+    description: {
+      en: 'Multi-currency customer accounts, holds, freezes, and limits.',
+      fa: 'حساب‌های چندارزی مشتری، هولد، فریز و محدودیت‌ها.',
+    },
+  },
+  {
+    key: 'cash-funds',
+    title: { en: 'Cash Funds', fa: 'صندوق نقد' },
+    path: '/cash-funds',
+    route: '/api/cash-funds',
+    groupKey: 'money',
+    icon: Landmark,
+    status: { en: 'Ready', fa: 'آماده' },
+    accent: 'green',
+    metric: { en: 'Vault', fa: 'خزانه' },
+    description: {
+      en: 'Main vaults, operator floats, shifts, and cash movement.',
+      fa: 'خزانه اصلی، صندوق کارمند، شیفت‌ها و حرکت پول نقد.',
+    },
+  },
+  {
+    key: 'transactions',
+    title: { en: 'Transactions', fa: 'معاملات' },
+    path: '/transactions',
+    route: '/demo/transactions',
+    groupKey: 'money',
+    icon: BadgeDollarSign,
+    status: { en: 'Limited', fa: 'محدود' },
+    accent: 'red',
+    metric: { en: 'Demo buttons', fa: 'دکمه‌های دمو' },
+    description: {
+      en: 'Transaction buttons are visible, but actions are locked in this demo version.',
+      fa: 'دکمه‌های معاملات نمایش داده می‌شوند، اما عملیات در این نسخه دمو قفل است.',
+    },
+  },
+  {
+    key: 'exchange-rates',
+    title: { en: 'Exchange Rates', fa: 'نرخ ارز' },
+    path: '/exchange-rates',
+    route: '/api/exchange-rates',
+    groupKey: 'money',
+    icon: Repeat2,
+    status: { en: 'Ready', fa: 'آماده' },
+    accent: 'gold',
+    metric: { en: 'FX', fa: 'تبادله' },
+    description: {
+      en: 'Current rates, spreads, history, and execution-time locking.',
+      fa: 'نرخ فعلی، اسپرد، تاریخچه و قفل شدن نرخ در زمان اجرا.',
+    },
+  },
+  {
+    key: 'hawala',
+    title: { en: 'Hawala', fa: 'حواله' },
+    path: '/hawala',
+    route: '/api/hawala',
+    groupKey: 'money',
+    icon: CircleDollarSign,
+    status: { en: 'Ready', fa: 'آماده' },
+    accent: 'teal',
+    metric: { en: 'Tracking', fa: 'پیگیری' },
+    description: {
+      en: 'Send, pay, return, cancel, fee, deadline, and status history.',
+      fa: 'ارسال، پرداخت، برگشت، لغو، فیس، مهلت و تاریخچه وضعیت.',
+    },
+  },
+  {
     key: 'ledger',
     title: { en: 'Ledger', fa: 'ژورنال و دفترکل' },
     path: '/ledger',
@@ -101,7 +182,7 @@ export const modules = [
     accent: 'green',
     metric: { en: 'Exports', fa: 'خروجی‌ها' },
     description: {
-      en: 'Placeholder for future reporting tools.',
+      en: 'Financial, operational, hawala, and compliance reporting.',
       fa: 'گزارش‌های مالی، عملیاتی، حواله و کنترول قانونی.',
     },
   },
@@ -116,7 +197,7 @@ export const modules = [
     accent: 'gold',
     metric: { en: 'Inbox', fa: 'صندوق پیام' },
     description: {
-      en: 'Staff alerts, backup reminders, and login events.',
+      en: 'Staff alerts for approvals, KYC, backup, hawala, and login events.',
       fa: 'هشدارهای کارمندان برای تایید، احراز هویت، نسخه پشتیبان، حواله و ورود.',
     },
   },
@@ -189,6 +270,16 @@ export const navigationGroups = [
     },
   },
   {
+    key: 'money',
+    label: { en: 'Money Operations', fa: 'عملیات پولی' },
+    icon: Banknote,
+    accent: 'gold',
+    description: {
+      en: 'Accounts, vaults, transaction buttons, exchange rates, and hawala.',
+      fa: 'حساب‌ها، صندوق نقد، دکمه‌های معاملات، نرخ ارز و حواله.',
+    },
+  },
+  {
     key: 'accounting',
     label: { en: 'Accounting', fa: 'حسابداری' },
     icon: BookOpen,
@@ -238,10 +329,10 @@ export const companyFields = [
 
 export const workspaceMetrics = [
   {
-    label: { en: 'Demo state', fa: 'وضعیت خزانه' },
-    value: { en: 'Online ready', fa: 'افغانی / دالر' },
-    trend: { en: 'Static safe', fa: 'متعادل' },
-    icon: Gauge,
+    label: { en: 'Vault position', fa: 'وضعیت خزانه' },
+    value: { en: 'AFG / USD', fa: 'افغانی / دالر' },
+    trend: { en: 'Balanced', fa: 'متعادل' },
+    icon: Banknote,
   },
   {
     label: { en: 'Approvals', fa: 'تاییدی‌ها' },
@@ -265,15 +356,15 @@ export const workspaceMetrics = [
 
 export const activityRows = [
   {
-    area: { en: 'Dashboard', fa: 'معاملات' },
-    item: { en: 'Live demo overview', fa: 'سرویس ثبت مالی' },
+    area: { en: 'Transactions', fa: 'معاملات' },
+    item: { en: 'Posting service', fa: 'سرویس ثبت مالی' },
     state: { en: 'Ready', fa: 'آماده' },
     icon: Activity,
   },
   {
-    area: { en: 'Setup', fa: 'صندوق نقد' },
-    item: { en: 'Users and customer records', fa: 'خزانه اصلی و حرکت نقد' },
-    state: { en: 'Prepared', fa: 'بیلانس دقیق' },
+    area: { en: 'Cash Funds', fa: 'صندوق نقد' },
+    item: { en: 'Main vault and float movement', fa: 'خزانه اصلی و حرکت نقد' },
+    state: { en: 'Exact balance', fa: 'بیلانس دقیق' },
     icon: Coins,
   },
   {
